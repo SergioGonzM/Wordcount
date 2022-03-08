@@ -1,6 +1,6 @@
 defmodule BecariosBunsan2022B1 do
   @moduledoc """
-  Documentation for `BecariosBunsan2022B1`.
+  Documentation for `BecariosBunsan2022B1`
   """
 
   @doc """
