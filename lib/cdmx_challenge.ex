@@ -21,17 +21,11 @@ defmodule MetroCdmxChallenge do
     ]
   """
   defmodule Line do
-    #defstruct name: "", stations:[] # con valor default para cada atributo
      defstruct [:name, :stations]
   end
   
   defmodule Station do
      defstruct [:name, :coords]
-  end
-
-  def metro_graph(xml_path) do
-     #lines = metro_lines(xml_path)
-     # Create graph ...
   end
 
   def metro_lines(xml_path) do
@@ -51,11 +45,26 @@ defmodule MetroCdmxChallenge do
         }end)
       end)
 
-      Enum.map(0..12, fn o -> 
+      Enum.map(0..11, fn o -> 
         %Line{
           name: "Linea #{Enum.at(nombre_lineas, o)}",
           stations: Enum.at(estaciones,o)
         }
-      end)
-  end 
+      end)   
+  end
+
+  def metro_graph(xml_path) do
+    lines = metro_lines(xml_path)
+    # Create graph ...
+    grafo = Graph.new(type: :undirected)
+    Enum.reduce(lines, grafo, fn l, grafo -> add_edges(l, grafo)end)
+  end
+
+  def add_edges(l, grafo) do
+    pairs = Enum.chunk_every(l.stations, 2, 1, :discard)
+    Enum.reduce(pairs, grafo, fn est, grafo -> Graph.add_edge(grafo, List.first(est).name, List.last(est).name)end)
+  end
+
+  
+
 end
