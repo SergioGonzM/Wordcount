@@ -31,7 +31,7 @@ Haciendo los test unitarios:
 
 Statement Coverage:
 
-![image](https://user-images.githubusercontent.com/99292588/160189430-531075ed-3871-4ed4-84a7-591bcb5d4821.png)
+![image](https://user-images.githubusercontent.com/99292588/160213406-b4110cf2-ae62-49e1-b489-a4b99a1b8f42.png)
 
 
 # WordCount
