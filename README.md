@@ -25,6 +25,13 @@ Default pac_date para todos los casos
 
 ![image](https://user-images.githubusercontent.com/99292588/160052682-e65854db-045d-425a-a29a-c1adc126b696.png)
 
+Haciendo los test unitarios:
+
+![image](https://user-images.githubusercontent.com/99292588/160188557-d7b17997-c67f-49ca-b9f2-b22bee3ebb46.png)
+
+Statement Coverage:
+
+![image](https://user-images.githubusercontent.com/99292588/160189430-531075ed-3871-4ed4-84a7-591bcb5d4821.png)
 
 
 # WordCount
