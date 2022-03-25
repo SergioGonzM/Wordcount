@@ -25,82 +25,13 @@ Default pac_date para todos los casos
 
 ![image](https://user-images.githubusercontent.com/99292588/160052682-e65854db-045d-425a-a29a-c1adc126b696.png)
 
-### 72 horas atras: 
+Haciendo los test unitarios:
 
-* America/Tijuana.72hrs.fail
+![image](https://user-images.githubusercontent.com/99292588/160188557-d7b17997-c67f-49ca-b9f2-b22bee3ebb46.png)
 
-![image](https://user-images.githubusercontent.com/99292588/160052791-7411d8bc-e59a-4a30-81ff-e73ee8aba940.png)
+Statement Coverage:
 
-* America/Sinaloa.72hrs.fail
-
-![image](https://user-images.githubusercontent.com/99292588/160052835-c2008d7e-1d3a-4b66-8b18-b9adbd02cb3f.png)
-
-* America/cdmx.72hrs.fail
-
-![image](https://user-images.githubusercontent.com/99292588/160052960-24c75e25-c85b-4b8e-b766-4a6734955a94.png)
-
-* America/Qroo.72hrs.fail
-
-![image](https://user-images.githubusercontent.com/99292588/160052992-a69fcecf-bf87-4d4a-a44c-f7d512d71968.png)
-
-* America/Tijuana.72hrs.success, Es un error porque no se esta tomando en cuenta el horario de verano
-
-![image](https://user-images.githubusercontent.com/99292588/160053364-5eb1600e-6683-4a77-8e6e-e12aa7c5402c.png)
-
-Esto se arregla añadiendo una hora mas, considerando el horario de verano:
-
-![image](https://user-images.githubusercontent.com/99292588/160053384-58c0d8d1-4624-45a0-a41a-99d39f3d9465.png)
-
-* America/Sinaloa.72hrs.Success
-
-![image](https://user-images.githubusercontent.com/99292588/160053396-2cc67f14-98ad-4c63-89e3-6a7d0aad95ca.png)
-
-* America/cdmx.72hrs.success
-
-![image](https://user-images.githubusercontent.com/99292588/160053415-26860928-cbe9-4e9c-a62c-b89a73220e59.png)
-
-* America/Qroo.72hrs.success
-
-![image](https://user-images.githubusercontent.com/99292588/160053449-61242269-0820-4ecd-9eae-43c9e8d78c75.png)
-
-
-### 5 Minutos Adelante:
-
-* America/Tijuana.5mns.success
-
-![image](https://user-images.githubusercontent.com/99292588/160053498-44e473f5-fce1-46f9-8c50-70d421540e74.png)
-
-* America/Sinaloa.5mns.Success
-
-![image](https://user-images.githubusercontent.com/99292588/160053511-7061f633-c0cd-40d8-885d-615d869acc9c.png)
-
-* America/cdmx.5mns.success
-
-![image](https://user-images.githubusercontent.com/99292588/160053582-ce58630c-ebbc-4ce6-984f-c23b2733a7fc.png)
-
-* America/Qroo.5mns.sucess
-
-![image](https://user-images.githubusercontent.com/99292588/160053602-9a66cb55-5390-4a73-b882-53a81c32c692.png)
-
-* America/Tijuana.5mns.fail (Es un success porque no se toma en cuenta el horario de verano)
-
-![image](https://user-images.githubusercontent.com/99292588/160053628-1b2d15ea-2ddd-4496-b92f-d10b5f8b2002.png)
-
-Esto se arregla añadiento una hora mas, considerando el horario de verano:
-
-![image](https://user-images.githubusercontent.com/99292588/160053659-5bffc3c3-1f1c-4fc4-89c8-2aaa7225c346.png)
-
-* America/Sinaloa.5mns.fail
-
-![image](https://user-images.githubusercontent.com/99292588/160053676-7c6b8723-d538-4174-bc4b-3619c0a2e1ca.png)
-
-* America/cdmx.5mns.fail
-
-![image](https://user-images.githubusercontent.com/99292588/160053692-fc6e31bc-d3c9-466a-b789-b8414373565e.png)
-
-* America/Qroo.5mns.fail
-
-![image](https://user-images.githubusercontent.com/99292588/160053730-f0a9ab20-8f88-4794-b1bb-a16da7af698d.png)
+![image](https://user-images.githubusercontent.com/99292588/160189430-531075ed-3871-4ed4-84a7-591bcb5d4821.png)
 
 
 # WordCount
