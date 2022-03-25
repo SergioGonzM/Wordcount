@@ -4,72 +4,43 @@ defmodule InvoiceValidatorTest do
     """
     use ExUnit.Case
     import InvoiceValidator
-    @tz Calendar.put_time_zone_database(Tzdata.TimeZoneDatabase)
+    Calendar.put_time_zone_database(Tzdata.TimeZoneDatabase)
+    @pac_date DateTime.from_naive!(~N[2022-03-23 15:06:35], "America/Mexico_City")
 
-    test "Centro" do
-        @tz
-        pac_date = DateTime.from_naive!(~N[2022-03-23 15:06:35], "America/Mexico_City")
+    data = [
+        {"72 hrs atras fail", "America/Tijuana", ~N[2022-03-20 13:06:31], :error},
+        {"72 hrs atras fail", "America/Mazatlan", ~N[2022-03-20 14:06:31], :error},
+        {"72 hrs atras fail", "America/Mexico_City", ~N[2022-03-20 15:06:31], :error},
+        {"72 hrs atras fail", "America/Cancun", ~N[2022-03-20 16:06:31], :error},
+        {"72 hrs atras success", "America/Tijuana", ~N[2022-03-20 14:06:35], :ok}, #para que salga ok, se toma en cuenta el horario de verano 
+        {"72 hrs atras success", "America/Mazatlan", ~N[2022-03-20 14:06:35], :ok},
+        {"72 hrs atras success", "America/Mexico_City", ~N[2022-03-20 15:06:35], :ok},
+        {"72 hrs atras success", "America/Cancun", ~N[2022-03-20 16:06:35], :ok},
 
-        #emisor date same as pac date
-        assert :ok == validate_dates(DateTime.from_naive!(~N[2022-03-23 15:06:35], "America/Mexico_City"), pac_date)
+        {"5 mns adelante success", "America/Tijuana", ~N[2022-03-23 13:11:35], :ok},
+        {"5 mns adelante success", "America/Mazatlan", ~N[2022-03-23 14:11:35], :ok},
+        {"5 mns adelante success", "America/Mexico_City" ,~N[2022-03-23 15:11:35], :ok},
+        {"5 mns adelante success", "America/Cancun", ~N[2022-03-23 16:11:35], :ok},
+        {"5 mns adelante fail", "America/Tijuana" ,~N[2022-03-23 14:11:36], :error}, #para que salga error, se toma en cuenta el horario de verano 
+        {"5 mns adelante fail", "America/Mazatlan", ~N[2022-03-23 14:11:36], :error},
+        {"5 mns adelante fail", "America/Mexico_City", ~N[2022-03-23 15:11:36], :error},
+        {"5 mns adelante fail", "America/Cancun", ~N[2022-03-23 16:11:36], :error}
+    ]
 
-        #submitted with over +72 hours
-        assert {:error, "Invoice was issued more than 72 hrs before received by the PAC"} == 
-            validate_dates(DateTime.from_naive!(~N[2022-03-20 14:06:35], "America/Mexico_City"), pac_date)
-
-        #emisor date has tolerance of 5 mins with pac date
-        assert {:error, "Invoice is more than 5 mins ahead in time"} == 
-            validate_dates(DateTime.from_naive!(~N[2022-03-23 15:11:36], "America/Mexico_City"), pac_date)
+    for {description_test, tz, emisor_date, status} <- data do
+        @description_test description_test
+        @tz tz
+        @emisor_date emisor_date
+        @status status
+        test "#{@description_test}, emisor in #{@tz} at #{@emisor_date} returns #{@status}" do
+            assert validate_dates(datetime(@emisor_date, @tz), @pac_date) == @status
+        end
     end
 
-    test "Sureste" do
-        @tz
-        pac_date = DateTime.from_naive!(~N[2022-03-23 15:06:35], "America/Mexico_City")
-
-        #emisor date same as pac date
-        assert :ok == validate_dates(DateTime.from_naive!(~N[2022-03-23 16:01:34], "America/Cancun"), pac_date)
-
-        #submitted with over +72 hours
-        assert {:error, "Invoice was issued more than 72 hrs before received by the PAC"} == 
-            validate_dates(DateTime.from_naive!(~N[2022-03-20 16:01:34], "America/Cancun"), pac_date)
-
-        #emisor date has tolerance of 5 mins with pac date
-        assert {:error, "Invoice is more than 5 mins ahead in time"} == 
-            validate_dates(DateTime.from_naive!(~N[2022-03-23 16:11:36], "America/Cancun"), pac_date)
-
+    defp datetime(%NaiveDateTime{} = ndt, tz) do
+        DateTime.from_naive!(ndt, tz)
     end
 
-    test "pacifico" do
-        @tz
-        pac_date = DateTime.from_naive!(~N[2022-03-23 14:06:35], "America/Mexico_City")
-
-        #emisor date same as pac date
-        assert :ok == validate_dates(DateTime.from_naive!(~N[2022-03-23 13:06:35], "Mexico/BajaSur"), pac_date)
-
-        #submitted with over +72 hours
-        assert {:error, "Invoice was issued more than 72 hrs before received by the PAC"} == 
-            validate_dates(DateTime.from_naive!(~N[2022-03-20 13:06:34], "Mexico/BajaSur"), pac_date)
-
-        #emisor date has tolerance of 5 mins with pac date
-        assert {:error, "Invoice is more than 5 mins ahead in time"} == 
-            validate_dates(DateTime.from_naive!(~N[2022-03-23 16:11:36], "Mexico/BajaSur"), pac_date)
-    end
-
-    test "noroeste" do
-        @tz
-        pac_date = DateTime.from_naive!(~N[2022-03-23 14:06:35], "America/Mexico_City")
-
-        #emisor date same as pac date
-        assert :ok == validate_dates(DateTime.from_naive!(~N[2022-03-23 13:06:35], "Mexico/BajaNorte"), pac_date)
-
-        #submitted with over +72 hours
-        assert {:error, "Invoice was issued more than 72 hrs before received by the PAC"} == 
-            validate_dates(DateTime.from_naive!(~N[2022-03-20 13:06:34], "Mexico/BajaNorte"), pac_date)
-
-        #emisor date has tolerance of 5 mins with pac date
-        assert {:error, "Invoice is more than 5 mins ahead in time"} == 
-            validate_dates(DateTime.from_naive!(~N[2022-03-23 13:11:36], "Mexico/BajaNorte"), pac_date)
-    end
 
 
 end
