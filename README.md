@@ -27,7 +27,7 @@ Default pac_date para todos los casos
 
 Haciendo los test unitarios:
 
-![image](https://user-images.githubusercontent.com/99292588/160188557-d7b17997-c67f-49ca-b9f2-b22bee3ebb46.png)
+![image](https://user-images.githubusercontent.com/99292588/160201882-c203992b-ee18-40cc-9521-0d780aeda99c.png)
 
 Statement Coverage:
 
