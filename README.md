@@ -27,11 +27,17 @@ Default pac_date para todos los casos
 
 Haciendo los test unitarios:
 
-![image](https://user-images.githubusercontent.com/99292588/160201882-c203992b-ee18-40cc-9521-0d780aeda99c.png)
+![image](https://user-images.githubusercontent.com/99292588/160207344-42632b44-ba5d-49a6-9a53-707786fb9bf1.png)
+
+Numero de caminos posibles:
+
+![image](https://user-images.githubusercontent.com/99292588/160216631-4eae764b-f396-498c-983d-f8d955377746.png)
+
 
 Statement Coverage:
 
-![image](https://user-images.githubusercontent.com/99292588/160189430-531075ed-3871-4ed4-84a7-591bcb5d4821.png)
+![image](https://user-images.githubusercontent.com/99292588/160213406-b4110cf2-ae62-49e1-b489-a4b99a1b8f42.png)
+
 
 
 # WordCount
