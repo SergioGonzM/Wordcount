@@ -1,4 +1,7 @@
 defmodule Wordcount do
+  @moduledoc """
+  Defines the count of each word in a given document
+  """
 
     def count(var) do
       String.normalize(var, :nfd) 

@@ -1,4 +1,7 @@
 defmodule Counter do
+  @moduledoc """
+  Degines a counter using processes
+  """
     def count(n) do
       state = receive do
         {:count, pid} -> send(pid, {:state, n + 1})

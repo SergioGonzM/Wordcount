@@ -2,7 +2,7 @@ defmodule MyListsTest do
     use ExUnit.Case
 
     test "Test Mapa" do
-        assert MyLists.map([1, 2, 3], fn x -> x+2 end) == [3, 4, 5]
+        assert MyLists.map([1, 2, 3], fn x -> x + 2 end) == [3, 4, 5]
     end
 
     test "Test each" do
@@ -10,7 +10,7 @@ defmodule MyListsTest do
     end
 
     test "Test reduce" do
-        assert MyLists.reduce([1, 2, 3], 0, fn x, a -> x+a end) == 6
+        assert MyLists.reduce([1, 2, 3], 0, fn x, a -> x + a end) == 6
     end
 
     test "Test zip" do

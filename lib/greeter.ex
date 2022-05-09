@@ -1,4 +1,7 @@
 defmodule Greeter do
+  @moduledoc """
+  Defines a greeter to watch how processes works
+  """
 
     def greet() do
       receive do

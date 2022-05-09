@@ -19,9 +19,9 @@ defmodule InvoiceValidatorTest do
 
         {"5 mns adelante success", "America/Tijuana", ~N[2022-03-23 13:11:35], :ok},
         {"5 mns adelante success", "America/Mazatlan", ~N[2022-03-23 14:11:35], :ok},
-        {"5 mns adelante success", "America/Mexico_City" ,~N[2022-03-23 15:11:35], :ok},
+        {"5 mns adelante success", "America/Mexico_City" , ~N[2022-03-23 15:11:35], :ok},
         {"5 mns adelante success", "America/Cancun", ~N[2022-03-23 16:11:35], :ok},
-        {"5 mns adelante fail", "America/Tijuana" ,~N[2022-03-23 14:11:36], :error}, #para que salga error, se toma en cuenta el horario de verano 
+        {"5 mns adelante fail", "America/Tijuana" , ~N[2022-03-23 14:11:36], :error}, #para que salga error, se toma en cuenta el horario de verano 
         {"5 mns adelante fail", "America/Mazatlan", ~N[2022-03-23 14:11:36], :error},
         {"5 mns adelante fail", "America/Mexico_City", ~N[2022-03-23 15:11:36], :error},
         {"5 mns adelante fail", "America/Cancun", ~N[2022-03-23 16:11:36], :error}

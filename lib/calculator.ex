@@ -1,4 +1,7 @@
 defmodule Calculator do
+  @moduledoc """
+  Defines a calculator using concurrency (pids)
+  """
 
     def init() do
       spawn(fn -> calc(0) end)

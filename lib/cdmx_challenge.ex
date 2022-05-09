@@ -1,6 +1,6 @@
 defmodule MetroCdmxChallenge do
   import SweetXml
-  @doc """
+  @moduledoc """
   Obtains ....
   
    ## Examples
@@ -21,17 +21,25 @@ defmodule MetroCdmxChallenge do
     ]
   """
   defmodule Line do
-     defstruct [:name, :stations]
+    @moduledoc """
+    Defines the struct of a Line
+    """
+    defstruct [:name, :stations]
   end
   
   defmodule Station do
-     defstruct [:name, :coords]
+    @moduledoc """
+    Defines the struct of each estation
+    """
+    defstruct [:name, :coords]
   end
 
   def metro_lines(xml_path) do
       doc = File.read!(xml_path)
-      nombre_lineas = doc |> xpath(~x"//Document/Folder[1]/Placemark/name/text()"l) |> Enum.map(fn l ->List.to_string(l) |> String.split(" ") |> Enum.at(1) end)
-      estaciones_individuales = doc |> xpath(~x"//Document/Folder[2]/Placemark"l,
+      nombre_lineas = doc |> xpath(~x"//Document/Folder[1]/Placemark/name/text()"l) |> Enum.map(fn l -> List.to_string(l) |> String.split(" ") |> Enum.at(1) end)
+      estaciones_individuales = 
+      doc 
+      |> xpath(~x"//Document/Folder[2]/Placemark"l,
       name: ~x"./name/text()",
       line: ~x"./description/text()", 
       coords: ~x"./Point/coordinates/text()"
@@ -48,7 +56,7 @@ defmodule MetroCdmxChallenge do
       Enum.map(0..11, fn o -> 
         %Line{
           name: "Linea #{Enum.at(nombre_lineas, o)}",
-          stations: Enum.at(estaciones,o)
+          stations: Enum.at(estaciones, o)
         }
       end)   
   end

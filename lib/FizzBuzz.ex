@@ -1,7 +1,12 @@
 defmodule FizzBuzz do
+    @moduledoc """
+    If a number is multiple of 3 then write Fizz
+    If a number is multiple of 5 then write Buzz
+    If a number is multiple of 3 and 5 then write FizzBuzz
+    """
 
     def fizzbuzz(x) do
-        Enum.each(1..x, fn x -> aux{rem(x,3), rem(x,5), x}end ) 
+        Enum.each(1..x, fn x -> aux{rem(x, 3), rem(x, 5), x}end ) 
     end
 
     def aux(x) do
