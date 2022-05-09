@@ -1,8 +1,9 @@
 defmodule MetroCdmxChallenge do
   import SweetXml
+
   @moduledoc """
   Obtains ....
-  
+
    ## Examples
      iex> MetroCdmxChallenge.metro_lines("./data/tiny_metro.kml")
     [
@@ -26,7 +27,7 @@ defmodule MetroCdmxChallenge do
     """
     defstruct [:name, :stations]
   end
-  
+
   defmodule Station do
     @moduledoc """
     Defines the struct of each estation
@@ -35,44 +36,64 @@ defmodule MetroCdmxChallenge do
   end
 
   def metro_lines(xml_path) do
-      doc = File.read!(xml_path)
-      nombre_lineas = doc |> xpath(~x"//Document/Folder[1]/Placemark/name/text()"l) |> Enum.map(fn l -> List.to_string(l) |> String.split(" ") |> Enum.at(1) end)
-      estaciones_individuales = 
-      doc 
-      |> xpath(~x"//Document/Folder[2]/Placemark"l,
-      name: ~x"./name/text()",
-      line: ~x"./description/text()", 
-      coords: ~x"./Point/coordinates/text()"
-    )
-     |> Enum.map(fn x -> %{name: to_string(x.name), line: to_string(x.line) |> String.split(".") |> Enum.at(0) |> String.split(" ") |> Enum.at(1), coords: to_string(x.coords) |> String.replace("\n", "")} end)
+    doc = File.read!(xml_path)
 
-       estaciones = Enum.map(nombre_lineas, fn y -> Enum.filter(estaciones_individuales, fn z -> z.line == y end) |> Enum.map(fn st -> 
-         %Station{
-          name: st.name,
-          coords: st.coords
-        }end)
+    nombre_lineas =
+      doc
+      |> xpath(~x"//Document/Folder[1]/Placemark/name/text()"l)
+      |> Enum.map(fn l -> List.to_string(l) |> String.split(" ") |> Enum.at(1) end)
+
+    estaciones_individuales =
+      doc
+      |> xpath(~x"//Document/Folder[2]/Placemark"l,
+        name: ~x"./name/text()",
+        line: ~x"./description/text()",
+        coords: ~x"./Point/coordinates/text()"
+      )
+      |> Enum.map(fn x ->
+        %{
+          name: to_string(x.name),
+          line:
+            to_string(x.line)
+            |> String.split(".")
+            |> Enum.at(0)
+            |> String.split(" ")
+            |> Enum.at(1),
+          coords: to_string(x.coords) |> String.replace("\n", "")
+        }
       end)
 
-      Enum.map(0..11, fn o -> 
-        %Line{
-          name: "Linea #{Enum.at(nombre_lineas, o)}",
-          stations: Enum.at(estaciones, o)
-        }
-      end)   
+    estaciones =
+      Enum.map(nombre_lineas, fn y ->
+        Enum.filter(estaciones_individuales, fn z -> z.line == y end)
+        |> Enum.map(fn st ->
+          %Station{
+            name: st.name,
+            coords: st.coords
+          }
+        end)
+      end)
+
+    Enum.map(0..11, fn o ->
+      %Line{
+        name: "Linea #{Enum.at(nombre_lineas, o)}",
+        stations: Enum.at(estaciones, o)
+      }
+    end)
   end
 
   def metro_graph(xml_path) do
     lines = metro_lines(xml_path)
     # Create graph ...
     grafo = Graph.new(type: :undirected)
-    Enum.reduce(lines, grafo, fn l, grafo -> add_edges(l, grafo)end)
+    Enum.reduce(lines, grafo, fn l, grafo -> add_edges(l, grafo) end)
   end
 
   def add_edges(l, grafo) do
     pairs = Enum.chunk_every(l.stations, 2, 1, :discard)
-    Enum.reduce(pairs, grafo, fn est, grafo -> Graph.add_edge(grafo, List.first(est).name, List.last(est).name)end)
+
+    Enum.reduce(pairs, grafo, fn est, grafo ->
+      Graph.add_edge(grafo, List.first(est).name, List.last(est).name)
+    end)
   end
-
-  
-
 end
