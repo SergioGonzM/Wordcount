@@ -1,4 +1,5 @@
 defmodule RabbitMQ.System do
+  require Logger
   @doc """
   Creates the exchange, the queues and their bindings.
   If the exchange and queues already exist, does nothing.
@@ -16,13 +17,14 @@ defmodule RabbitMQ.System do
         AMQP.Queue.bind(channel, queue_name, exchange_name, routing_key: queue_name)
       end
     )
-
-    IO.puts("[x] Exchange name: #{exchange_name} with queues: #{queue_names}")
+    Logger.info("[x] Exchange name: #{exchange_name} with queues: #{queue_names}")
+    #IO.puts("[x] Exchange name: #{exchange_name} with queues: #{queue_names}")
     AMQP.Connection.close(connection)
   end
 end
 
 defmodule RabbitMQ.Producer do
+  require Logger
   @doc """
   Sends n messages with payload 'msg' and the given routing key.
   """
@@ -33,8 +35,8 @@ defmodule RabbitMQ.Producer do
     Enum.each(1..n, fn _message ->
       AMQP.Basic.publish(channel, exchange, routing_key, msg)
     end)
-
-    IO.puts("Sending #{n} messages to: #{routing_key}")
+    Logger.info("Sending #{n} messages to: #{routing_key}")
+    #IO.puts("Sending #{n} messages to: #{routing_key}")
     AMQP.Connection.close(connection)
   end
 end
